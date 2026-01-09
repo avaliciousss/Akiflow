@@ -1,0 +1,175 @@
+{
+  "generate_plan": {
+    "endpoint": "POST /api/plan",
+    "description": "Generate a time-blocked schedule for the day",
+    "request": {
+      "available_start": "2026-01-09T09:00:00",
+      "available_end": "2026-01-09T17:00:00",
+      "tasks": [
+        {
+          "title": "Write project proposal",
+          "description": "Draft the Q1 project proposal for the new feature",
+          "estimated_minutes": 45,
+          "priority": "high",
+          "requires_energy": "high"
+        },
+        {
+          "title": "Reply to emails",
+          "description": "Clear inbox and respond to urgent messages",
+          "estimated_minutes": 20,
+          "priority": "medium",
+          "requires_energy": "low"
+        },
+        {
+          "title": "Review pull requests",
+          "description": "Code review for team PRs",
+          "estimated_minutes": 30,
+          "priority": "medium",
+          "requires_energy": "medium"
+        }
+      ],
+      "energy_level": "medium",
+      "preferences": {
+        "focus_duration_minutes": 25,
+        "break_duration_minutes": 5,
+        "buffer_percentage": 0.25,
+        "start_with_easy_task": true
+      }
+    },
+    "response_example": {
+      "summary": "Your 9:00 AM-5:00 PM plan: 3 focus blocks with built-in breaks and buffer time. Starting small to build momentum.",
+      "blocks": [
+        {
+          "start_time": "2026-01-09T09:00:00.000Z",
+          "end_time": "2026-01-09T09:10:00.000Z",
+          "title": "Start small: Reply to emails",
+          "steps": [
+            "Open email inbox",
+            "Skim subject lines for urgent items"
+          ],
+          "energy_level": "low",
+          "type": "focus"
+        },
+        {
+          "start_time": "2026-01-09T09:10:00.000Z",
+          "end_time": "2026-01-09T09:15:00.000Z",
+          "title": "Break + reset",
+          "steps": [
+            "Stand up and stretch",
+            "Drink water or have a snack",
+            "Look away from screen (20-20-20 rule)"
+          ],
+          "energy_level": "low",
+          "type": "break"
+        }
+      ],
+      "next_action": "Set a 10-minute timer and start: Start small: Reply to emails"
+    }
+  },
+  "start_session": {
+    "endpoint": "POST /api/sessions/start",
+    "description": "Start a live focus session with a specific task",
+    "request": {
+      "task": {
+        "title": "Write blog post",
+        "description": "Write draft of technical blog post about TypeScript",
+        "estimated_minutes": 30,
+        "subtasks": [
+          "Open Google Docs and create new document",
+          "Write outline with 3-5 main points",
+          "Draft introduction paragraph",
+          "Write first main section",
+          "Review and light editing"
+        ]
+      },
+      "duration_minutes": 30
+    },
+    "response_example": {
+      "session": {
+        "session_id": "session_1736445600000_abc123xyz",
+        "task": {
+          "title": "Write blog post"
+        },
+        "planned_duration_minutes": 30,
+        "start_time": "2026-01-09T14:00:00.000Z",
+        "current_step": 0,
+        "steps": [
+          "Open Google Docs and create new document",
+          "Write outline with 3-5 main points",
+          "Draft introduction paragraph",
+          "Write first main section",
+          "Review and light editing"
+        ],
+        "check_ins": [],
+        "status": "active"
+      },
+      "message": "Session started! Open Google Docs and create new document",
+      "next_steps": [
+        "Open Google Docs and create new document",
+        "Write outline with 3-5 main points",
+        "Draft introduction paragraph"
+      ]
+    }
+  },
+  "check_in": {
+    "endpoint": "POST /api/sessions/:sessionId/checkin",
+    "description": "Record a check-in during a live session",
+    "request": {
+      "completed_work": "Finished the outline and introduction",
+      "energy_level": "medium",
+      "continue_or_adjust": "keep_going",
+      "notes": "Feeling good about the flow"
+    },
+    "response_example": {
+      "check_in": {
+        "timestamp": "2026-01-09T14:15:00.000Z",
+        "completed_work": "Finished the outline and introduction",
+        "energy_level": "medium",
+        "continue_or_adjust": "keep_going"
+      },
+      "next_steps": [
+        "Write first main section",
+        "Review and light editing"
+      ],
+      "encouragement": "Nice work keeping steady. You got this. Perfect - let's keep the rhythm going."
+    }
+  },
+  "recovery_plan": {
+    "endpoint": "POST /api/recovery",
+    "description": "Create a recovery plan after getting derailed",
+    "request": {
+      "current_time": "2026-01-09T14:30:00",
+      "available_until": "2026-01-09T17:00:00",
+      "what_happened": "Got distracted by Slack messages and lost focus",
+      "current_energy": "medium",
+      "remaining_tasks": [
+        {
+          "title": "Finish blog post",
+          "estimated_minutes": 20
+        },
+        {
+          "title": "Update project board",
+          "estimated_minutes": 10
+        }
+      ]
+    },
+    "response_example": {
+      "acknowledgment": "That's completely normal with ADHD - plans often need adjusting, and that's okay.",
+      "next_tiny_step": "Take one deep breath, then open your task list.",
+      "revised_blocks": [
+        {
+          "start_time": "2026-01-09T14:30:00.000Z",
+          "end_time": "2026-01-09T14:40:00.000Z",
+          "title": "Start small: Update project board",
+          "steps": [
+            "Open project board",
+            "Review what needs to be updated"
+          ],
+          "energy_level": "medium",
+          "type": "focus"
+        }
+      ],
+      "reflection_question": "What's one small thing that could make the next block easier?"
+    }
+  }
+}
